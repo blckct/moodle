@@ -725,8 +725,8 @@ class mssql_native_moodle_database extends moodle_database {
                                         "\\1SELECT\\2 TOP $fetch", $sql);
                 }
             } else {
-                $sql = (substr($sql, -1) === ';') ? substr($sql, 0, -1) : $sql;
-                // We need order by to use FETCH/OFFSET. Ordering by first column shouldn't break anything if there was no order in the first place.
+                // We need order by to use FETCH/OFFSET.
+		// Ordering by first column shouldn't break anything if there was no order in the first place.
                 if (!strpos(strtoupper($sql), "ORDER BY")) {
                     $sql .= " ORDER BY 1";
                 }
