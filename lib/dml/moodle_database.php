@@ -109,6 +109,8 @@ abstract class moodle_database {
     protected $last_time;
     /** @var bool Flag indicating logging of query in progress. This helps prevent infinite loops. */
     private $loggingquery = false;
+    /** @var bool Flag indicating if query logging is possible or not. */
+    protected $loggingready = true;
 
     /** @var bool True if the db is used for db sessions. */
     protected $used_for_db_sessions = false;
@@ -473,6 +475,10 @@ abstract class moodle_database {
 
         // Will be shown or not depending on MDL_PERF values rather than in dboptions['log*].
         $this->queriestime = $this->queriestime + $time;
+
+        if (!$this->loggingready) {
+            return;
+        }
 
         if ($logall or ($logslow and ($logslow < ($time+0.00001))) or ($iserror and $logerrors)) {
             $this->loggingquery = true;

@@ -167,6 +167,10 @@ class sqlsrv_native_moodle_database extends moodle_database {
      * @throws dml_connection_exception if error
      */
     public function connect($dbhost, $dbuser, $dbpass, $dbname, $prefix, array $dboptions=null) {
+
+        // We can't log queries until temptables are initialized
+        $this->loggingready = false;
+
         if ($prefix == '' and !$this->external) {
             // Enforce prefixes for everybody but mysql.
             throw new dml_exception('prefixcannotbeempty', $this->get_dbfamily());
@@ -252,6 +256,8 @@ class sqlsrv_native_moodle_database extends moodle_database {
 
         // Connection established and configured, going to instantiate the temptables controller
         $this->temptables = new sqlsrv_native_moodle_temptables($this);
+
+        $this->loggingready = true;
 
         return true;
     }
