@@ -800,6 +800,8 @@ class pgsql_native_moodle_database extends moodle_database {
         $return = array();
         if ($rows) {
             foreach ($rows as $row) {
+                $row = array_change_key_case($row, CASE_LOWER);
+
                 $id = reset($row);
                 if ($blobs) {
                     foreach ($blobs as $blob) {
