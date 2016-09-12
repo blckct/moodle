@@ -74,6 +74,8 @@ $PAGE->set_pagelayout('admin');
 $PAGE->set_title($title);
 $PAGE->set_heading($fullname);
 
+$category->descriptiontrust = 'true';
+
 $mform = new core_course_editcategory_form(null, array(
     'categoryid' => $id,
     'parent' => $category->parent,
